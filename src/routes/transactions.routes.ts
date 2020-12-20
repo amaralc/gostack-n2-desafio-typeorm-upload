@@ -15,9 +15,7 @@ transactionsRouter.get('/', transactionController.index);
 
 transactionsRouter.post('/', transactionController.create);
 
-transactionsRouter.delete('/:id', async (request, response) => {
-  // TODO
-});
+transactionsRouter.delete('/:id', transactionController.delete);
 
 transactionsRouter.post('/import', async (request, response) => {
   // TODO
