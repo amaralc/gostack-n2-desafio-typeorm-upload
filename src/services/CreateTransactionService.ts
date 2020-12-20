@@ -1,27 +1,28 @@
-import { injectable, inject, container } from 'tsyringe';
+import { injectable, inject } from 'tsyringe';
 
 import AppError from '../errors/AppError';
 
-import ICreateTransactionServiceDTO from '../dtos/ICreateTransactionServiceDTO'
+import ICreateTransactionServiceDTO from '../dtos/ICreateTransactionServiceDTO';
 import TransactionsRepository from '../repositories/typeorm/TransactionsRepository';
 import Transaction from '../models/Transaction';
-import FindCategoryByTitle from './FindCategoryIdByTitleService';
-import CreateCategoryService from './CreateCategoryService';
+import CategoriesRepository from '../repositories/typeorm/CategoriesRepository';
 
 @injectable()
 class CreateTransactionService {
   constructor(
     @inject('TransactionsRepository')
     private transactionsRepository: TransactionsRepository,
-    ) {}
+
+    @inject('CategoriesRepository')
+    private categoriesRepository: CategoriesRepository,
+  ) {}
 
   public async execute({
     title,
     type,
     value,
-    category
+    category,
   }: ICreateTransactionServiceDTO): Promise<Transaction> {
-
     /** Get balance */
     const balance = await this.transactionsRepository.getBalance();
 
@@ -32,34 +33,28 @@ class CreateTransactionService {
       );
     }
 
-    /** Instancia serviço utilizando container de injecao de dependencias */
-    const findCategoryByTitle = container.resolve(
-      FindCategoryByTitle,
+    /** Create category */
+    let selectedCategory = await this.categoriesRepository.findByTitle(
+      category,
     );
 
-    /** Find category */
-    let selectedCategory = await findCategoryByTitle.execute({title: category})
-
     /** If doesnt exist, create one */
-    if(!selectedCategory){
-
-      /** Initialize service */
-      const createCategoryService = container.resolve(CreateCategoryService)
-
+    if (!selectedCategory) {
       /** Create category */
-      selectedCategory = await createCategoryService.execute({title: category})
-
+      selectedCategory = await this.categoriesRepository.create({
+        title: category,
+      });
     }
 
     /** Define category id */
-    const category_id = selectedCategory.id
+    const category_id = selectedCategory.id;
 
     /** Create transaction */
     const transaction = await this.transactionsRepository.create({
       title,
       type,
       value,
-      category_id
+      category_id,
     });
 
     /** Return transaction */
