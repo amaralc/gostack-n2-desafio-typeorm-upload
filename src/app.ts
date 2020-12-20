@@ -9,6 +9,9 @@ import AppError from './errors/AppError';
 
 import createConnection from './database';
 
+/** Importa container de injecao de dependencias */
+import './container';
+
 createConnection();
 const app = express();
 

@@ -1,8 +1,17 @@
 // import AppError from '../errors/AppError';
 
+import { inject, injectable } from 'tsyringe';
+import TransactionsRepository from '../repositories/typeorm/TransactionsRepository';
+
+@injectable()
 class DeleteTransactionService {
-  public async execute(): Promise<void> {
-    // TODO
+  constructor(
+    @inject('TransactionsRepository')
+    private transactionsRepository: TransactionsRepository,
+  ) {}
+
+  public async execute(id: string): Promise<void> {
+    this.transactionsRepository.delete(id);
   }
 }
 
