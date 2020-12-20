@@ -35,7 +35,8 @@
         }
       }
     ],
-    "@typescript-eslint/interface-name-prefix": ["error", { "prefixWithI": "aways" }],
+    "camelcase":"off",
+    "no-useless-constructor":"off",
     "no-underscore-dangle": "off",
     "prettier/prettier": "error",
     "class-methods-use-this": "off",
