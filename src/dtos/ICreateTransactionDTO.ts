@@ -1,6 +1,6 @@
-export default interface ICreateTransactionRequestBody {
+export default interface ICreateTransactionDTO {
   title: string;
   value: number;
   type: 'income' | 'outcome';
-  category: string;
+  category_id: string;
 }
