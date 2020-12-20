@@ -5,15 +5,13 @@ import { Router } from 'express';
 // import DeleteTransactionService from '../services/DeleteTransactionService';
 // import ImportTransactionsService from '../services/ImportTransactionsService';
 
-import TransactionController from '../controllers/TransactionController'
+import TransactionController from '../controllers/TransactionController';
 
 const transactionController = new TransactionController();
 
 const transactionsRouter = Router();
 
-transactionsRouter.get('/', async (request, response) => {
-  // TODO
-});
+transactionsRouter.get('/', transactionController.index);
 
 transactionsRouter.post('/', transactionController.create);
 
