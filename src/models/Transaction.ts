@@ -9,6 +9,7 @@ import {
   JoinColumn,
 } from 'typeorm';
 
+import { Exclude } from 'class-transformer';
 import Category from './Category';
 
 @Entity('transactions')
@@ -29,12 +30,13 @@ class Transaction {
   value: number;
 
   @Column()
+  @Exclude()
   category_id: string;
 
   /** Relacionamento tipo 'muitos' deste model para 'um' do model referenciado */
   @ManyToOne(() => Category)
   @JoinColumn({ name: 'category_id' })
-  provider: Category;
+  category: Category;
 
   @CreateDateColumn()
   created_at: Date;
