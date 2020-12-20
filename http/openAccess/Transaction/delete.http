@@ -1,0 +1,4 @@
+DELETE {{baseUrl}}/transactions/6ab56d13-dae7-4d06-badb-5785c5697a83 HTTP/1.1
+Content-Type: application/json
+# Authorization: jwt {{token}}
+
