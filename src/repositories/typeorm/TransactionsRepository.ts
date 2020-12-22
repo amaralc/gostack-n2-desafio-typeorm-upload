@@ -6,6 +6,7 @@ import Transaction from '../../models/Transaction';
 import ITransactionsRepository from '../ITransactionsRepository';
 import ICreateTransactionDTO from '../../dtos/ICreateTransactionDTO';
 import IGetBalanceResponseDTO from '../../dtos/IGetBalanceResponseDTO';
+import ICreateBulkTransactionsDTO from '../../dtos/ICreateBulkTransactionsDTO';
 
 @EntityRepository(Transaction)
 class TransactionsRepository implements ITransactionsRepository {
@@ -28,6 +29,20 @@ class TransactionsRepository implements ITransactionsRepository {
 
     /** Retorna instância criada */
     return transaction;
+  }
+
+  /** Método para criar varias instancias */
+  public async createFromListOfTransactions(
+    listOfTransactions: ICreateBulkTransactionsDTO,
+  ): Promise<Transaction[]> {
+    /** Cria novo instância */
+    const transactions = this.ormRepository.create(listOfTransactions);
+
+    /** Salva instância no banco de dados */
+    await this.ormRepository.save(transactions);
+
+    /** Retorna instância criada */
+    return classToClass(transactions);
   }
 
   public async getBalance(): Promise<IGetBalanceResponseDTO> {
