@@ -3,7 +3,7 @@ Content-Type: multipart/form-data; boundary=myboundaryname
 Authorization: Bearer {{token}}
 
 --myboundaryname
-Content-Disposition: form-data; name="csv"; filename="file.csv"
+Content-Disposition: form-data; name="file"; filename="file.csv"
 Content-Type: text/csv
 
 < ./file.csv
