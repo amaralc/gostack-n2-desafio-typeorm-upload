@@ -8,11 +8,13 @@ import uploadConfig from '../config/upload';
 // import ImportTransactionsService from '../services/ImportTransactionsService';
 
 import TransactionController from '../controllers/TransactionController';
+import ImportTransactionsController from '../controllers/ImportTransactionsController';
 
 /** Cria instancia do multer para fazer upload */
 const upload = multer(uploadConfig.multer);
 
 const transactionController = new TransactionController();
+const importTransactionsController = new ImportTransactionsController();
 
 const transactionsRouter = Router();
 
@@ -24,11 +26,8 @@ transactionsRouter.delete('/:id', transactionController.delete);
 
 transactionsRouter.post(
   '/import',
-  upload.single('csv'),
-  async (request, response) => {
-    // TODO
-    return response.json({ ok: true });
-  },
+  upload.single('file'),
+  importTransactionsController.create,
 );
 
 export default transactionsRouter;
