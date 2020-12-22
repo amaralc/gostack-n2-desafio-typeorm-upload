@@ -1,9 +1,16 @@
 // import Transaction from '../models/Transaction';
 
+import LoadCSVService from './LoadCSVService';
+
 class ImportTransactionsService {
-  async execute(path: string): Promise<string> {
+  async execute(filePath: string): Promise<any[]> {
+    const loadCSVService = new LoadCSVService();
+
+    const result = await loadCSVService.execute(filePath);
+
+    console.log({ result });
     // TODO
-    return path;
+    return [result];
   }
 }
 

@@ -5,7 +5,7 @@ export default class TransactionController {
   public async create(request: Request, response: Response): Promise<Response> {
     const importTransactionsService = new ImportTransactionsService();
 
-    const transactions = await importTransactionsService.execute(
+    const [transactions] = await importTransactionsService.execute(
       request.file.path,
     );
 
