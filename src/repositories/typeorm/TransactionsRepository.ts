@@ -42,7 +42,7 @@ class TransactionsRepository implements ITransactionsRepository {
     await this.ormRepository.save(transactions);
 
     /** Retorna instância criada */
-    return transactions;
+    return classToClass(transactions);
   }
 
   public async getBalance(): Promise<IGetBalanceResponseDTO> {

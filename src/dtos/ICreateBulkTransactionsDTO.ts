@@ -1,5 +1,12 @@
-import ICreateTransactionDTO from './ICreateTransactionDTO';
+import Category from '../models/Category';
 
-type ICreateBulkTransactionsDTO = ICreateTransactionDTO[];
+interface ICreateTransactionWithCategoryDTO {
+  title: string;
+  value: number;
+  type: 'income' | 'outcome';
+  category: Category;
+}
+
+type ICreateBulkTransactionsDTO = ICreateTransactionWithCategoryDTO[];
 
 export default ICreateBulkTransactionsDTO;

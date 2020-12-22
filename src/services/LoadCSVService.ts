@@ -12,10 +12,7 @@ interface ICSVTransaction {
   category: string;
 }
 
-interface IResponse {
-  categories: string[];
-  transactions: ICSVTransaction[];
-}
+type IResponse = Transaction[];
 
 export default class LoadCSVService {
   public async execute(filePath: string): Promise<IResponse> {
@@ -81,19 +78,22 @@ export default class LoadCSVService {
         category => category.title === transaction.category,
       );
 
+      if (!currentCategory) {
+        throw new Error('No category was found');
+      }
+
       return {
         title: transaction.title,
         type: transaction.type,
         value: transaction.value,
-        category_id: currentCategory ? currentCategory.id : '',
+        category: currentCategory,
       };
     });
 
     const createdTransactions = transactionsRepository.createFromListOfTransactions(
       transactionsToCreate,
     );
-    console.log(createdTransactions);
 
-    return { categories, transactions };
+    return createdTransactions;
   }
 }
