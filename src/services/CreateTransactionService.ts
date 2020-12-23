@@ -46,15 +46,12 @@ class CreateTransactionService {
       });
     }
 
-    /** Define category id */
-    const category_id = selectedCategory.id;
-
     /** Create transaction */
     const transaction = await this.transactionsRepository.create({
       title,
       type,
       value,
-      category_id,
+      category: selectedCategory,
     });
 
     /** Return transaction */
