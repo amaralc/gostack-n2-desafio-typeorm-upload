@@ -34,7 +34,7 @@ class Transaction {
   category_id: string;
 
   /** Relacionamento tipo 'muitos' deste model para 'um' do model referenciado */
-  @ManyToOne(() => Category)
+  @ManyToOne(() => Category, category => category.transaction, { eager: true })
   @JoinColumn({ name: 'category_id' })
   category: Category;
 

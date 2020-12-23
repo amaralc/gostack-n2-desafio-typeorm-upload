@@ -5,7 +5,10 @@ import {
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
+  OneToMany,
 } from 'typeorm';
+
+import Transaction from './Transaction';
 
 /**
  * Utiliza experimental decorators (@) para definir que o model
@@ -24,6 +27,9 @@ class Category {
   /** Define provider como coluna (nao gerada) do tipo string (padrão) */
   @Column()
   title: string;
+
+  @OneToMany(() => Transaction, transaction => transaction.category)
+  transaction: Transaction;
 
   @CreateDateColumn()
   created_at: Date;
